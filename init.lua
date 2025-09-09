@@ -408,12 +408,6 @@ require("lazy").setup({
 			view_options = {
 				show_hidden = true,
 			},
-			keymaps = {
-				["%"] = "actions.create", -- new file or dir (prompt)
-				["d"] = "actions.delete", -- delete
-				["r"] = "actions.rename", -- rename
-				["_"] = "actions.create_dir", -- directly make a dir
-			},
 		},
 		-- Optional dependencies
 		dependencies = { { "echasnovski/mini.icons", opts = {} } },
@@ -942,23 +936,9 @@ require("lazy").setup({
 			-- vim.cmd [[colorscheme catppuccin]]
 		end,
 	},
-	{
-		"deparr/tairiki.nvim",
-		lazy = false,
-		priority = 1000, -- only necessary if you use tairiki as default theme
-		config = function()
-			require("tairiki").setup({
-				-- optional configuration here
-				-- transparent = true, -- Show/hide background
-			})
-			require("tairiki").load() -- only necessary to use as default theme, has same behavior as ':colorscheme tairiki'
-			vim.cmd([[colorscheme tairiki]])
-		end,
-	},
 	{ "blazkowolf/gruber-darker.nvim" },
 	{ "Mofiqul/vscode.nvim" },
-	{ "rebelot/kanagawa.nvim" },
-	-- Highlight todo, notes, etc in comments
+	{ "rebelot/kanagawa.nvim", lazy = false, priority = 1001 },
 	{
 		"folke/todo-comments.nvim",
 		event = "VimEnter",
@@ -1104,6 +1084,31 @@ require("lazy").setup({
 		},
 	},
 })
+require("kanagawa").setup({
+	compile = false, -- enable compiling the colorscheme
+	undercurl = true, -- enable undercurls
+	commentStyle = { italic = true },
+	functionStyle = {},
+	keywordStyle = { italic = true },
+	statementStyle = { bold = true },
+	typeStyle = {},
+	transparent = false, -- do not set background color
+	dimInactive = false, -- dim inactive window `:h hl-NormalNC`
+	terminalColors = true, -- define vim.g.terminal_color_{0,17}
+	colors = { -- add/modify theme and palette colors
+		palette = {},
+		theme = { wave = {}, lotus = {}, dragon = {}, all = {} },
+	},
+	overrides = function(colors) -- add/modify highlights
+		return {}
+	end,
+	theme = "wave", -- Load "wave" theme
+	background = { -- map the value of 'background' option to a theme
+		dark = "wave", -- try "dragon" !
+		light = "lotus",
+	},
+})
 
+vim.cmd("colorscheme kanagawa-dragon")
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
