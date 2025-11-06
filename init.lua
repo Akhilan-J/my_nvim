@@ -940,6 +940,23 @@ require("lazy").setup({
 	{ "Mofiqul/vscode.nvim" },
 	{ "rebelot/kanagawa.nvim", lazy = false, priority = 1001 },
 	{
+		"ribru17/bamboo.nvim",
+		lazy = true, -- load immediately
+		priority = 1000, -- make sure it loads before other plugins
+		config = function()
+			require("bamboo").setup({
+				-- optional custom configuration
+				style = "vulgaris", -- or "multiplex", "eco" etc.
+				transparent = true,
+				dim_inactive = true,
+			})
+
+			-- Enable the colorscheme
+			require("bamboo").load()
+		end,
+	},
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
+	{
 		"folke/todo-comments.nvim",
 		event = "VimEnter",
 		dependencies = { "nvim-lua/plenary.nvim" },
@@ -1108,7 +1125,7 @@ require("kanagawa").setup({
 		light = "lotus",
 	},
 })
-
-vim.cmd("colorscheme kanagawa-dragon")
+-- Lua
+vim.cmd("colorscheme bamboo")
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
